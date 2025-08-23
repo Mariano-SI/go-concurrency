@@ -7,22 +7,27 @@ import (
 )
 
 func main() {
-	//wait group serve para garantir que todas as routines irao ter terminado antes do porgrama se encerrar
-
+	// WaitGroup serve para garantir que todas as goroutines terminem
+	// antes do programa se encerrar
 	var waitGroup sync.WaitGroup
 
-	waitGroup.Add(2) // quantidade de routines que ele vai monitorar
+	// Vamos monitorar 2 goroutines
+	waitGroup.Add(2)
 
-	go func(){
+	// Primeira goroutine
+	go func() {
 		write("Hello, World!")
-		waitGroup.Done() //-1
+		waitGroup.Done() // sinaliza que terminou (-1)
 	}()
-	go func(){
-		write("Programming in golang")
-		waitGroup.Done()//-1
+
+	// Segunda goroutine
+	go func() {
+		write("Programming in Go")
+		waitGroup.Done() // sinaliza que terminou (-1)
 	}()
-	
-	waitGroup.Wait() // permite que o programa escerre quando a quantidade for 0
+
+	// Espera até que todas as goroutines chamem Done()
+	waitGroup.Wait()
 }
 
 func write(text string) {
